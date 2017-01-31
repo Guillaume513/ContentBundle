@@ -1,0 +1,30 @@
+{
+  "name" : "contentbundle",
+  "description" : "Gestion du contenu",
+  "type" : "symfony-bundle",
+  "authors" : [{
+    "name" : "Laubressac",
+    "email" : "guillaume.laubressac@gmail.com"
+  }],
+  "keywords" : [
+    "Gestion de contenu"
+  ],
+  "license" : [
+    "MIT"
+  ],
+  "require" : {
+  },
+  "autoload" : {
+    "psr-0" : {
+      "Company\\DemoBundle" : ""
+    }
+  },
+  "target-dir" : "ContentBundle",
+  "repositories" : [{
+  }],
+  "extra" : {
+    "branch-alias" : {
+      "dev-master" : "some_version-dev"
+    }
+  }
+}

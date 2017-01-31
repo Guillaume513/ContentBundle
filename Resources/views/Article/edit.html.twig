@@ -1,0 +1,553 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block title %}Modifier : {{ object.title }}{% endblock  %}
+
+{% block css %}
+    <link href="{{ asset('css/dropzone_custom.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('vendor/jstree/dist/themes/default/style.css') }}"  type="text/css">
+{% endblock %}
+
+{% block body %}
+<div class="page-header-area" id="head-admin-dashboard">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="header-page">
+                    <h1>Modifier : {{ object.title }}</h1>
+                    <ul>
+                        <li> <a href="{{ path('home') }}">Accueil</a> </li>
+                        <li> <a href="{{ path('admin_homepage') }}">Tableau de bord</a> </li>
+                        <li> <a href="{{ path('admin_rubrique_list') }}">Gestion du contenu</a> </li>
+                        <li> Modifier : {{ object.title }} </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="home-page-about-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <section class="tile tile-simple">
+                    <div class="tile-header">
+                        <h1 class="custom-font"><strong>Arborescence</strong></h1>
+                    </div>
+                    <div class="tile-body">
+                        <input type="text" id="plugins4_q" value="" placeholder="Rechercher" class="input" style="margin:0em auto 1em auto; display:block; padding:4px; border-radius:4px; border:1px solid silver;" />
+                        <div id="html" class="demo">
+                            {% for rub in rubriques %}
+                                <ul>
+                                    <li data-jstree='{ "opened" : true }'>
+                                        <a href="{{ path('admin_rubrique_edit', {id: rub.id}) }}" >{{ rub.title }}</a>
+                                        {% for page in pages %}
+                                            {% if rub.id == page.rubrique.id %}
+                                                <ul>
+                                                    <li data-jstree='{ "opened" : false, "icon": "glyphicon glyphicon-file" }'>
+                                                        <a href="{{ path('admin_page_edit', {id: page.id}) }}" >{{ page.title }}</a>
+                                                        {% for art in articles %}
+                                                            {% if page.id == art.page.id %}
+                                                                <ul>
+                                                                    {% if (art.id == object.id) %}
+                                                                    <li data-jstree='{ "selected" : true, "icon": "fa fa-twitch"}'>
+                                                                        {{ art.title }}
+                                                                    {% else %}
+                                                                    <li data-jstree='{"icon": "fa fa-twitch" }'>
+                                                                        <a href="{{ path('admin_article_edit', {id: art.id}) }}" >{{ art.title }}</a>
+                                                                    {% endif %}
+                                                                    </li>
+                                                                </ul>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </li>
+                                                </ul>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </li>
+                                </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-md-8">
+                {{ form_start(form) }}
+                <section class="tile tile-simple">
+                    <div class="tile-body p-0">
+                        <div class="tabpanel">
+                            <ul class="nav nav-tabs tabs-dark" role="tablist">
+                                {% if active == 1 %}
+                                    {% set active1 = 'active' %}
+                                    {% set active2 = '' %}
+                                    {% set active3 = '' %}
+                                    {% set active4 = '' %}
+                                {% elseif active == 2 %}
+                                    {% set active1 = '' %}
+                                    {% set active2 = 'active' %}
+                                    {% set active3 = '' %}
+                                    {% set active4 = '' %}
+                                {% elseif active == 3 %}
+                                    {% set active1 = '' %}
+                                    {% set active2 = '' %}
+                                    {% set active3 = 'active' %}
+                                    {% set active4 = '' %}
+                                {% elseif active == 4 %}
+                                    {% set active1 = '' %}
+                                    {% set active2 = '' %}
+                                    {% set active3 = '' %}
+                                    {% set active4 = 'active' %}
+                                {% endif %}
+                                <li class="{{ active1 }}" id="contenu">
+                                    <a href="#tab_1_1" data-toggle="tab">Contenu</a>
+                                </li>
+                                <li class="{{ active4 }}" id="logo">
+                                    <a href="#tab_1_4" data-toggle="tab">Logo Article</a>
+                                </li>
+                                <li class="{{ active2 }}" id="image">
+                                    <a href="#tab_1_2" data-toggle="tab">Image</a>
+                                </li>
+                                <li class="{{ active3 }}" id="referencement">
+                                    <a href="#tab_1_3" data-toggle="tab">Référencement</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <!-- PERSONAL INFO TAB -->
+                                <div role="tabpanel" class="tab-pane {{ active1 }}" id="tab_1_1">
+                                    <div class="row form-group push-top-20">
+                                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                            <label form="{{ form.isActive.vars.id }}">En ligne</label>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                                            {{ form_errors(form.isActive) }}
+                                            {{ form_widget(form.isActive) }}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                            <label form="{{ form.orderNbr.vars.id }}">Ordre d'affichage</label>
+                                        </div>
+                                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                            {{ form_errors(form.orderNbr) }}
+                                            {{ form_widget(form.orderNbr) }}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                            <label form="{{ form.page.vars.id }}">Page</label>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                                            {{ form_errors(form.page) }}
+                                            {{ form_widget(form.page) }}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                            <label form="{{ form.subtitle.vars.id }}">
+                                                {% if object.page.rubrique.id == 3 %}
+                                                    Distance du carillon
+                                                {% else %}
+                                                    Surtitre
+                                                {% endif %}
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                                            <div class="input-inline input-xlarge">
+                                                <div class="input-group">
+                                                    {{ form_errors(form.subhead) }}
+                                                    {{ form_widget(form.subhead) }}
+                                                    <span class="input-group-addon input-circle-right">
+                                                        <i class="fa fa-file-text-o"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                            <label form="{{ form.title.vars.id }}">Titre</label>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                                            <div class="input-inline input-xlarge">
+                                                <div class="input-group">
+                                                    {{ form_errors(form.title) }}
+                                                    {{ form_widget(form.title) }}
+                                                    <span class="input-group-addon input-circle-right">
+                                                        <i class="fa fa-file-text-o"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                            <label form="{{ form.subtitle.vars.id }}">Sous Titre</label>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                                            <div class="input-inline input-xlarge">
+                                                <div class="input-group">
+                                                    {{ form_errors(form.subtitle) }}
+                                                    {{ form_widget(form.subtitle) }}
+                                                    <span class="input-group-addon input-circle-right">
+                                                                    <i class="fa fa-file-text-o"></i>
+                                                                </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                            <label form="{{ form.summary.vars.id }}">Descriptif rapide</label>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                                            {{ form_errors(form.summary) }}
+                                            {{ form_widget(form.summary) }}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                            <label form="{{ form.text.vars.id }}">Texte</label>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                                            {{ form_errors(form.text) }}
+                                            {{ form_widget(form.text) }}
+                                        </div>
+                                    </div>
+
+                                    {#<div class="margiv-top-10">#}
+                                    {#<a href="javascript:;" class="btn green"> Save Changes </a>#}
+                                    {#<a href="javascript:;" class="btn default"> Cancel </a>#}
+                                    {#</div>#}
+                                </div>
+                                <!-- END PERSONAL INFO TAB -->
+
+                                <div class="tab-pane {{ active4 }}" id="tab_1_4">
+                                    {% for formdoc in form.document %}
+                                        {% set rubDoc = formdoc.vars.data %}
+                                        {% if rubDoc.isLogo == 1%}
+                                            <div class="row form-group text-center">
+                                                <div class="tile-header">
+                                                    <h1 class="custom-font"><strong>Logo de l'article</strong></h1>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group text-center">
+                                                {% if rubDoc.path %}
+                                                    <div class="thumb thumb-xl">
+                                                        <img class="img-circle" src="{{ asset('css/img/img-user/article/logo/' ~ rubDoc.path) }}" alt="{{ rubDoc.name }}">
+                                                        <a href="{{ path('admin_doc_delete', {id: rubDoc.id, active: 1}) }}" onclick="return confirm('Êtes vous sur ?')" title="Supprimer l'image">
+                                                            <i class="fa fa-trash delete-contenue-logo"></i>
+                                                        </a>
+                                                    </div>
+                                                {% else %}
+                                                    {{ form_widget(formdoc.file) }}
+                                                {% endif %}
+                                            </div>
+
+                                            <div class="row form-group">
+                                                <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                                    <label form="{{ formdoc.name.vars.id }}">Nom</label>
+                                                </div>
+                                                <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                                                    {{ form_errors(formdoc.name) }}
+                                                    {{ form_widget(formdoc.name) }}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+
+                                <!-- CHANGE AVATAR TAB -->
+                                <div class="tab-pane {{ active2 }}" id="tab_1_2">
+                                    <h2>Gestion des images</h2>
+                                    <div id="actions" class="row">
+
+                                        <div class="col-lg-7 push-top-20">
+                                            <!-- The fileinput-button span is used to style the file input field as button -->
+                                                        <span class="btn btn-success fileinput-button">
+                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                            <span>Add files...</span>
+                                                        </span>
+                                            <button type="submit" class="btn btn-primary start">
+                                                <i class="glyphicon glyphicon-upload"></i>
+                                                <span>Start upload</span>
+                                            </button>
+                                            <button type="reset" class="btn btn-warning cancel">
+                                                <i class="glyphicon glyphicon-ban-circle"></i>
+                                                <span>Cancel upload</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-lg-5">
+                                            <!-- The global file processing state -->
+                                                <span class="fileupload-process">
+                                                  <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                                      <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                                  </div>
+                                                </span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="table table-striped files" id="previews">
+                                        <div id="template" class="file-row">
+                                            <!-- This is used as the file preview template -->
+                                            <div>
+                                                <span class="preview">
+                                                    {#<img data-dz-thumbnail />#}
+                                                    <img class="image thumbnail-80" src="" data-size="128305" data-dz-thumbnail />
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <p class="name" data-dz-name></p>
+                                                <strong class="error text-danger" data-dz-errormessage></strong>
+                                            </div>
+                                            <div>
+                                                <p class="size" data-dz-size></p>
+                                                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                                    <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <a class="btn btn-primary start">
+                                                    <i class="glyphicon glyphicon-upload"></i>
+                                                    <span>Start</span>
+                                                </a>
+                                                <a data-dz-remove class="btn btn-warning cancel">
+                                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                                    <span>Cancel</span>
+                                                </a>
+                                                <a data-dz-remove class="btn btn-danger delete">
+                                                    <i class="glyphicon glyphicon-trash"></i>
+                                                    <span>Delete</span>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane {{ active3 }}" id="tab_1_3">
+                                    <div class="row form-group">
+                                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                            <label form="{{ form.refTitle.vars.id }}">Référencement titre</label>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                                            {{ form_errors(form.refTitle) }}
+                                            {{ form_widget(form.refTitle) }}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                            <label form="{{ form.refUrl.vars.id }}">Référencement Url</label>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                                            {{ form_errors(form.refUrl) }}
+                                            {{ form_widget(form.refUrl) }}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                            <label form="{{ form.refSummary.vars.id }}">Référencement description</label>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                                            {{ form_errors(form.refSummary) }}
+                                            {{ form_widget(form.refSummary) }}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+                                            <label form="{{ form.refKeywords.vars.id }}">Référencement mot clé</label>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+                                            {{ form_errors(form.refKeywords) }}
+                                            {{ form_widget(form.refKeywords) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <section class="tile tile-simple">
+                                    <!-- tile body -->
+                                    <div class="tile-body">
+                                        {{ form_widget(form.tabulation) }}
+                                        {{ form_widget(form.Valider) }}
+                                        <input type="hidden" name="article[_token]" id="article__token" value="{{ csrf_token('article_item') }}">
+
+                                        {% for flashMessage in app.session.flashbag.get('success_article') %}
+                                            <div class="alert alert-success push-top">
+                                                {{ flashMessage }}
+                                            </div>
+                                        {% endfor %}
+                                        {% for flashMessage in app.session.flashbag.get('error_article') %}
+                                            <div class="alert alert-danger push-top">
+                                                {{ flashMessage }}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <!-- /tile body -->
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {{ form_end(form, {'render_rest': false}) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{{ asset('vendor/dropzone/dist/dropzone.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('vendor/jstree/dist/jstree.min.js')}}"></script> <!-- jsTree -->
+    <script>
+        //je récupère l'action où sera traité l'upload en PHP
+        var _actionToDropZone = Routing.generate('ajax_snippet_image_article_send', {id: {{ object.id }} });
+
+        //je définis ma zone de drop grâce à l'ID de ma div citée plus haut.
+        Dropzone.autoDiscover = false;
+
+        // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+        var previewNode = document.querySelector("#template");
+        previewNode.id = "";
+        var previewTemplate = previewNode.parentNode.innerHTML;
+        previewNode.parentNode.removeChild(previewNode);
+
+        var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+            url: _actionToDropZone, // Set the url
+            thumbnailWidth: 80,
+            thumbnailHeight: 80,
+            parallelUploads: 20,
+            acceptedFiles: 'image/*',
+            previewTemplate: previewTemplate,
+            autoQueue: false, // Make sure the files aren't queued until manually added
+            previewsContainer: "#previews", // Define the container to display the previews
+            clickable: ".fileinput-button",
+            init: function () {
+                $.ajax({
+                    url: Routing.generate('image_article_edit_doc', {id: {{ object.id }} }),
+                    type: "POST",
+                    success : function(response) {
+                        $.each(response, function(i, item) {
+                            var fileInfo = $(item);
+                            var image = fileInfo.find('.image:eq(0)');
+                            var existingFile = {
+                                name: item.name,
+                                size: 2000,
+                                accepted: true,
+                                fullPath: '{{ asset("/css/img/img-user/article/")}}' + {{ object.id }} +'/'+item.path
+                            };
+
+                            // Call the default addedfile event handler
+                            myDropzone.emit("addedfile", existingFile);
+
+                            // And optionally show the thumbnail of the file:
+                            myDropzone.emit("thumbnail", existingFile, existingFile.fullPath);
+
+                            myDropzone.emit("success",existingFile);
+                            myDropzone.emit("complete",existingFile)
+                        })
+                    }
+                });
+//                var mockFile = { name: "myimage.jpg", size: 12345, type: 'image/jpeg' };
+//                this.addFile.call(this, mockFile);
+//                this.options.thumbnail.call(this, mockFile, "http://someserver.com/myimage.jpg");
+            }// Define the element that should be used as click trigger to select files.
+        });
+
+        myDropzone.on("addedfile", function(file) {
+            // Hookup the start button
+            file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file); };
+        });
+
+        // Update the total progress bar
+        myDropzone.on("totaluploadprogress", function(progress) {
+            document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
+        });
+
+        myDropzone.on("sending", function(file) {
+            // Show the total progress bar when upload starts
+            document.querySelector("#total-progress").style.opacity = "1";
+            // And disable the start button
+            file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+        });
+
+        // Hide the total progress bar when nothing's uploading anymore
+        myDropzone.on("queuecomplete", function(progress) {
+            document.querySelector("#total-progress").style.opacity = "0";
+        });
+
+        myDropzone.on('removedfile', function(file){
+            $.ajax({
+                url: Routing.generate('article_image_delete', {id_article: {{ object.id }}, name: file.name}),
+                type: "POST",
+                success : function(response) {
+                    if (response.status == 'success') {
+                        alert("Fichier bien supprimé.")
+                    } else {
+                        alert("Problème a la suppression.")
+                    }
+                }
+            });
+        });
+
+        // Setup the buttons for all transfers
+        // The "add files" button doesn't need to be setup because the config
+        // `clickable` has already been specified.
+        document.querySelector("#actions .start").onclick = function() {
+            myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+        };
+        document.querySelector("#actions .cancel").onclick = function() {
+            myDropzone.removeAllFiles(true);
+        };
+
+        if($( "#contenu" ).is(".active")) {
+            $('.tabulation513').val(1);
+        } else if ($( "#image" ).is(".active")) {
+            $('.tabulation513').val(2);
+        } else if ($( "#referencement" ).is(".active")) {
+            $('.tabulation513').val(3);
+        } else if ($( "#logo" ).is(".active")) {
+            $('.tabulation513').val(4);
+        }
+
+        $( "#contenu" ).click(function() {
+            $('.tabulation513').val(1);
+        })
+        $( "#image" ).click(function() {
+            $('.tabulation513').val(2);
+        })
+        $( "#referencement" ).click(function() {
+            $('.tabulation513').val(3);
+        })
+        $( "#logo" ).click(function() {
+            $('.tabulation513').val(4);
+        })
+
+        $(window).load(function() {
+            $('#html').jstree({
+                "core" : {
+                    "check_callback" : true
+                },
+                "plugins" : [ "themes", "json_data", "ui", "search" ],
+            });
+            var to = false;
+            $('#plugins4_q').keyup(function () {
+                if(to) { clearTimeout(to); }
+                to = setTimeout(function () {
+                    var v = $('#plugins4_q').val();
+                    $('#html').jstree(true).search(v);
+                }, 250);
+            });
+
+
+            $("#html").on("changed.jstree", function (e, data) {
+                if (data.instance.get_node(data.selected[0]).a_attr != '') {
+                    var href = data.instance.get_node(data.selected[0]).a_attr;
+                    document.location.href = href['href'];
+                }
+            })
+        })
+    </script>
+
+{% endblock %}
