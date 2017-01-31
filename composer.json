@@ -16,7 +16,7 @@
   },
   "autoload" : {
     "psr-0" : {
-      "Company\\DemoBundle" : ""
+      "ContentBundle" : ""
     }
   },
   "target-dir" : "ContentBundle",
