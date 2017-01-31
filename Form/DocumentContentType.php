@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DocumentType extends AbstractType
+class DocumentContentType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -41,7 +41,7 @@ class DocumentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'ContentBundle\Entity\Document',
+            'data_class' => 'ContentBundle\Entity\DocumentContent',
             'required' => false,
         ]);
     }

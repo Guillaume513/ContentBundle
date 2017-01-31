@@ -2,7 +2,7 @@
 
 namespace ContentBundle\Controller;
 
-use ContentBundle\Entity\Document;
+use ContentBundle\Entity\DocumentContent;
 use ContentBundle\Entity\Page;
 use ContentBundle\Entity\Rubrique;
 use ContentBundle\Form\PageType;
@@ -32,9 +32,9 @@ class PageController extends Controller
 
         $isActive = $page->getIsActive();
 
-        $doc = $em->getRepository('ContentBundle:Document')->findOneBy(['page' => $page, 'isLogo' => 1]);
+        $doc = $em->getRepository('ContentBundle:DocumentContent')->findOneBy(['page' => $page, 'isLogo' => 1]);
         if (empty($doc)) {
-            $doc = new Document();
+            $doc = new DocumentContent();
             $doc->setIsLogo(1);
             $doc->setPage($page);
             $doc->setEndPath('page/logo');
@@ -71,9 +71,9 @@ class PageController extends Controller
                 }
 
                 $i = 0;
-                foreach ($page->getDocument() as $val) {
+                foreach ($page->getDocumentContent() as $val) {
                     if ($val->getIsLogo() == 1) {
-                        $doc->setName($form->get('document')[$i]['name']->getData());
+                        $doc->setName($form->get('documentContent')[$i]['name']->getData());
                     }
                     $i++;
                 }
@@ -148,12 +148,12 @@ class PageController extends Controller
 
         $page->setRubrique($rubrique);
 
-        $doc = new Document();
+        $doc = new DocumentContent();
         $doc->setIsLogo(1);
         $doc->setEndPath('page/logo');
         $doc->setPage($page);
         $doc->setCreatedAt(new \DateTime());
-        $page->getDocument()->add($doc);
+        $page->getDocumentContent()->add($doc);
 
 
         $form = $this->createForm(PageType::class, $page, [
@@ -233,7 +233,7 @@ class PageController extends Controller
             return $this->redirect($this->generateUrl('admin_rubrique_list'));
         }
 
-        $docs = $em->getRepository('ContentBundle:Document')->findBy(['page' => $id], []);
+        $docs = $em->getRepository('ContentBundle:DocumentContent')->findBy(['page' => $id], []);
         foreach ($docs as $doc) {
             if ($doc->getIsLogo()) {
                 $doc->setEndPath('page/logo');

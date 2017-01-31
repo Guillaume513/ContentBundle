@@ -69,8 +69,8 @@ class ArticleType extends AbstractType
                 'required' => false,
                 'config_name' => 'my_config',
             ])
-            ->add('document', CollectionType::class, [
-                'entry_type' => DocumentType::class,
+            ->add('documentContent', CollectionType::class, [
+                'entry_type' => DocumentContentType::class,
                 'by_reference' => true,
             ])
             ->add('page', EntityType::class, [

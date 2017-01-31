@@ -8,16 +8,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File;
 
 /**
- * Document
+ * DocumentContent
  *
- * @ORM\Table(name="document", indexes={
- *     @ORM\Index(name="fk_document_rubrique1_idx", columns={"rubrique_id"}),
- *     @ORM\Index(name="fk_document_page1_idx", columns={"page_id"}),
- *     @ORM\Index(name="fk_document_article1_idx", columns={"article_id"})})
+ * @ORM\Table(name="documentContent", indexes={
+ *     @ORM\Index(name="fk_documentContent_rubrique1_idx", columns={"rubrique_id"}),
+ *     @ORM\Index(name="fk_documentContentt_page1_idx", columns={"page_id"}),
+ *     @ORM\Index(name="fk_documentContent_article1_idx", columns={"article_id"})})
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class Document
+class DocumentContent
 {
 
     /**
@@ -95,7 +95,7 @@ class Document
     /**
      * @var \ContentBundle\Entity\Rubrique
      *
-     *  @ORM\ManyToOne(targetEntity="Rubrique", inversedBy="document")
+     *  @ORM\ManyToOne(targetEntity="Rubrique", inversedBy="documentContent")
      *  @ORM\JoinColumn(name="rubrique_id", referencedColumnName="id")
      */
 
@@ -104,7 +104,7 @@ class Document
     /**
      * @var \ContentBundle\Entity\Page
      *
-     * @ORM\ManyToOne(targetEntity="ContentBundle\Entity\Page", inversedBy="document")
+     * @ORM\ManyToOne(targetEntity="ContentBundle\Entity\Page", inversedBy="documentContent")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="page_id", referencedColumnName="id")
      * })
@@ -114,7 +114,7 @@ class Document
     /**
      * @var \ContentBundle\Entity\Article
      *
-     * @ORM\ManyToOne(targetEntity="ContentBundle\Entity\Article", inversedBy="document")
+     * @ORM\ManyToOne(targetEntity="ContentBundle\Entity\Article", inversedBy="documentContent")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="article_id", referencedColumnName="id")
      * })
@@ -132,7 +132,7 @@ class Document
      *
      * @param string $path
      *
-     * @return Document
+     * @return DocumentContent
      */
     public function setPath($path)
     {
@@ -243,7 +243,7 @@ class Document
      *
      * @param boolean $isLogo
      *
-     * @return Document
+     * @return DocumentContent
      */
     public function setIsLogo($isLogo)
     {
@@ -267,7 +267,7 @@ class Document
      *
      * @param \DateTime $createdAt
      *
-     * @return Document
+     * @return DocumentContent
      */
     public function setCreatedAt($createdAt)
     {
@@ -291,7 +291,7 @@ class Document
      *
      * @param \DateTime $updatedAt
      *
-     * @return Document
+     * @return DocumentContent
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -326,7 +326,7 @@ class Document
      *
      * @param \ContentBundle\Entity\Page $page
      *
-     * @return Document
+     * @return DocumentContent
      */
     public function setPage(\ContentBundle\Entity\Page $page = null)
     {
@@ -342,7 +342,7 @@ class Document
      *
      * @param \ContentBundle\Entity\Rubrique $rubrique
      *
-     * @return Document
+     * @return DocumentContent
      */
     public function setRubrique(\ContentBundle\Entity\Rubrique $rubrique = null)
     {
@@ -366,7 +366,7 @@ class Document
      *
      * @param string $name
      *
-     * @return Document
+     * @return DocumentContent
      */
     public function setName($name)
     {
@@ -400,7 +400,7 @@ class Document
      *
      * @param \ContentBundle\Entity\Article $article
      *
-     * @return Document
+     * @return DocumentContent
      */
     public function setArticle(\ContentBundle\Entity\Article $article = null)
     {
@@ -424,7 +424,7 @@ class Document
      *
      * @param string $descriptif
      *
-     * @return Document
+     * @return DocumentContent
      */
     public function setDescriptif($descriptif)
     {

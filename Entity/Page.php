@@ -138,22 +138,23 @@ class Page
     private $refKeywords;
 
     /**
-     * @var Document
-     * @ORM\OneToMany(targetEntity="Document", mappedBy="page", cascade={"persist"})
+     * @var DocumentContent
+     * @ORM\OneToMany(targetEntity="DocumentContent", mappedBy="page", cascade={"persist"})
      */
-    private $document;
+    private $documentContent;
 
     /**
      * @var Article
      * @ORM\OneToMany(targetEntity="Article", mappedBy="page", cascade={"persist"})
      */
     private $article;
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->document = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->documentContent = new \Doctrine\Common\Collections\ArrayCollection();
         $this->article = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -308,7 +309,7 @@ class Page
      */
     public function getIsActive()
     {
-        return (boolean) $this->isActive;
+        return $this->isActive;
     }
 
     /**
@@ -528,37 +529,37 @@ class Page
     }
 
     /**
-     * Add document
+     * Add documentContent
      *
-     * @param \ContentBundle\Entity\Document $document
+     * @param \ContentBundle\Entity\DocumentContent $documentContent
      *
      * @return Page
      */
-    public function addDocument(\ContentBundle\Entity\Document $document)
+    public function addDocumentContent(\ContentBundle\Entity\DocumentContent $documentContent)
     {
-        $this->document[] = $document;
+        $this->documentContent[] = $documentContent;
 
         return $this;
     }
 
     /**
-     * Remove document
+     * Remove documentContent
      *
-     * @param \ContentBundle\Entity\Document $document
+     * @param \ContentBundle\Entity\DocumentContent $documentContent
      */
-    public function removeDocument(\ContentBundle\Entity\Document $document)
+    public function removeDocumentContent(\ContentBundle\Entity\DocumentContent $documentContent)
     {
-        $this->document->removeElement($document);
+        $this->documentContent->removeElement($documentContent);
     }
 
     /**
-     * Get document
+     * Get documentContent
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getDocument()
+    public function getDocumentContent()
     {
-        return $this->document;
+        return $this->documentContent;
     }
 
     /**

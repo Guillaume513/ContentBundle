@@ -137,18 +137,17 @@ class Article
     private $refKeywords;
 
     /**
-     * @var Document
-     * @ORM\OneToMany(targetEntity="Document", mappedBy="article", cascade={"persist"})
+     * @var DocumentContent
+     * @ORM\OneToMany(targetEntity="ContentBundle\Entity\DocumentContent", mappedBy="article", cascade={"persist"})
      */
-    private $document;
-
+    private $documentContent;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->document = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->documentContent = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -207,6 +206,30 @@ class Article
     public function getSubtitle()
     {
         return $this->subtitle;
+    }
+
+    /**
+     * Set subhead
+     *
+     * @param string $subhead
+     *
+     * @return Article
+     */
+    public function setSubhead($subhead)
+    {
+        $this->subhead = $subhead;
+
+        return $this;
+    }
+
+    /**
+     * Get subhead
+     *
+     * @return string
+     */
+    public function getSubhead()
+    {
+        return $this->subhead;
     }
 
     /**
@@ -302,7 +325,7 @@ class Article
      */
     public function getIsActive()
     {
-        return (boolean) $this->isActive;
+        return $this->isActive;
     }
 
     /**
@@ -498,60 +521,36 @@ class Article
     }
 
     /**
-     * Add document
+     * Add documentContent
      *
-     * @param \ContentBundle\Entity\Document $document
+     * @param \ContentBundle\Entity\DocumentContent $documentContent
      *
      * @return Article
      */
-    public function addDocument(\ContentBundle\Entity\Document $document)
+    public function addDocumentContent(\ContentBundle\Entity\DocumentContent $documentContent)
     {
-        $this->document[] = $document;
+        $this->documentContent[] = $documentContent;
 
         return $this;
     }
 
     /**
-     * Remove document
+     * Remove documentContent
      *
-     * @param \ContentBundle\Entity\Document $document
+     * @param \ContentBundle\Entity\DocumentContent $documentContent
      */
-    public function removeDocument(\ContentBundle\Entity\Document $document)
+    public function removeDocumentContent(\ContentBundle\Entity\DocumentContent $documentContent)
     {
-        $this->document->removeElement($document);
+        $this->documentContent->removeElement($documentContent);
     }
 
     /**
-     * Get document
+     * Get documentContent
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getDocument()
+    public function getDocumentContent()
     {
-        return $this->document;
-    }
-
-    /**
-     * Set subhead
-     *
-     * @param string $subhead
-     *
-     * @return Article
-     */
-    public function setSubhead($subhead)
-    {
-        $this->subhead = $subhead;
-
-        return $this;
-    }
-
-    /**
-     * Get subhead
-     *
-     * @return string
-     */
-    public function getSubhead()
-    {
-        return $this->subhead;
+        return $this->documentContent;
     }
 }

@@ -3,7 +3,7 @@
 namespace ContentBundle\Controller;
 
 use ContentBundle\Entity\Article;
-use ContentBundle\Entity\Document;
+use ContentBundle\Entity\DocumentContent;
 use ContentBundle\Entity\Page;
 use ContentBundle\Form\ArticleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,9 +27,9 @@ class ArticleController extends Controller
         $article = $this->getObject($id);
         $article->setUpdatedAt(new \DateTime());
 
-        $doc = $em->getRepository('ContentBundle:Document')->findOneBy(['article' => $article, 'isLogo' => 1]);
+        $doc = $em->getRepository('ContentBundle:DocumentContent')->findOneBy(['article' => $article, 'isLogo' => 1]);
         if (empty($doc)) {
-            $doc = new Document();
+            $doc = new DocumentContent();
             $doc->setIsLogo(1);
             $doc->setArticle($article);
             $doc->setEndPath('article/logo');
@@ -60,9 +60,9 @@ class ArticleController extends Controller
                 }
 
                 $i = 0;
-                foreach ($article->getDocument() as $val) {
+                foreach ($article->getDocumentContent() as $val) {
                     if ($val->getIsLogo() == 1) {
-                        $doc->setName($form->get('document')[$i]['name']->getData());
+                        $doc->setName($form->get('documentContent')[$i]['name']->getData());
                     }
                     $i++;
                 }
@@ -137,12 +137,12 @@ class ArticleController extends Controller
         $article->setPage($page);
         $article->setCreatedAt(new \DateTime());
 
-        $doc = new Document();
+        $doc = new DocumentContent();
         $doc->setIsLogo(1);
         $doc->setEndPath('article/logo');
         $doc->setArticle($article);
         $doc->setCreatedAt(new \DateTime());
-        $article->getDocument()->add($doc);;
+        $article->getDocumentContent()->add($doc);;
 
         $form = $this->createForm(ArticleType::class, $article, [
             'action' => $this->generateUrl('admin_article_new', ['pageId' => $page->getId()]),
@@ -214,7 +214,7 @@ class ArticleController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $docs = $em->getRepository('ContentBundle:Document')->findBy(['article' => $id], []);
+        $docs = $em->getRepository('ContentBundle:DocumentContent')->findBy(['article' => $id], []);
         foreach ($docs as $doc) {
             if ($doc->getIsLogo()) {
                 $doc->setEndPath('article/logo');

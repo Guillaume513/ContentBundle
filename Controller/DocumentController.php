@@ -3,7 +3,7 @@
 namespace ContentBundle\Controller;
 
 use ContentBundle\Entity\Article;
-use ContentBundle\Entity\Document;
+use ContentBundle\Entity\DocumentContent;
 use ContentBundle\Entity\Page;
 use ContentBundle\Entity\Rubrique;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -18,7 +18,7 @@ class DocumentController extends Controller
 {
     /**
      * @Route("/doc/{id}/delete/{active}", defaults={"active" = 1}, options={ "expose" = true}, name="admin_doc_delete")
-     * Removes a Document
+     * Removes a DocumentContent
      *
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -32,11 +32,11 @@ class DocumentController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $doc = $this->getDoctrine()->getRepository('ContentBundle:Document')->findOneBy([
+        $doc = $this->getDoctrine()->getRepository('ContentBundle:DocumentContent')->findOneBy([
             'id' => (int)$id,
         ]);
 
-        if (!($doc instanceof Document)) {
+        if (!($doc instanceof DocumentContent)) {
             throw new NotFoundHttpException('The Document with ID ' . $id . ' could not be found');
         }
 
@@ -86,7 +86,7 @@ class DocumentController extends Controller
     {
         $em = $this->container->get("doctrine.orm.default_entity_manager");
 
-        $document = new Document();
+        $document = new DocumentContent();
         $doc = $request->files->get('file');
 
         $rubrique = $em->getRepository('ContentBundle:Rubrique')->findOneBy(['id' => (int)$id]);
@@ -118,7 +118,7 @@ class DocumentController extends Controller
     {
         $em = $this->container->get("doctrine.orm.default_entity_manager");
 
-        $document = new Document();
+        $document = new DocumentContent();
         $doc = $request->files->get('file');
 
         $page = $em->getRepository('ContentBundle:Page')->findOneBy(['id' => (int)$id]);
@@ -150,7 +150,7 @@ class DocumentController extends Controller
     {
         $em = $this->container->get("doctrine.orm.default_entity_manager");
 
-        $document = new Document();
+        $document = new DocumentContent();
         $doc = $request->files->get('file');
 
         $article = $em->getRepository('ContentBundle:Article')->findOneBy(['id' => (int)$id]);
@@ -189,7 +189,7 @@ class DocumentController extends Controller
             throw new NotFoundHttpException('The Rubrique could not be found');
         }
 
-        $doc = $this->getDoctrine()->getRepository('ContentBundle:Document')->findBy([
+        $doc = $this->getDoctrine()->getRepository('ContentBundle:DocumentContent')->findBy([
             'rubrique' => $rubrique,
             'isLogo' => 0,
         ]);
@@ -213,7 +213,7 @@ class DocumentController extends Controller
             throw new NotFoundHttpException('The Page could not be found');
         }
 
-        $doc = $this->getDoctrine()->getRepository('ContentBundle:Document')->findBy([
+        $doc = $this->getDoctrine()->getRepository('ContentBundle:DocumentContent')->findBy([
             'page' => $page,
             'isLogo' => 0,
         ]);
@@ -237,7 +237,7 @@ class DocumentController extends Controller
             throw new NotFoundHttpException('The Article could not be found');
         }
 
-        $doc = $this->getDoctrine()->getRepository('ContentBundle:Document')->findBy([
+        $doc = $this->getDoctrine()->getRepository('ContentBundle:DocumentContent')->findBy([
             'article' => $article,
             'isLogo' => 0,
         ]);
@@ -249,7 +249,7 @@ class DocumentController extends Controller
 
     /**
      * @Route("rubrique/{id_rubrique}/image/{name}/delete", options={ "expose" = true}, name="rubrique_image_delete")
-     * Removes a Document
+     * Removes a DocumentContent
      *
      * @param $name
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -269,7 +269,7 @@ class DocumentController extends Controller
             throw new NotFoundHttpException('The Rubrique could not be found');
         }
 
-        $doc = $this->getDoctrine()->getRepository('ContentBundle:Document')->findOneBy([
+        $doc = $this->getDoctrine()->getRepository('ContentBundle:DocumentContent')->findOneBy([
             'rubrique' => $rubrique,
             'name' => $name,
             'isLogo' => 0,
@@ -277,7 +277,7 @@ class DocumentController extends Controller
 
         $doc->setEndPath('rubrique/'.$rubrique->getId());
 
-        if (!($doc instanceof Document)) {
+        if (!($doc instanceof DocumentContent)) {
             throw new NotFoundHttpException('The Document with ID could not be found');
         }
 
@@ -294,7 +294,7 @@ class DocumentController extends Controller
 
     /**
      * @Route("page/{id_page}/image/{name}/delete", options={ "expose" = true}, name="page_image_delete")
-     * Removes a Document
+     * Removes a DocumentContent
      *
      * @param $name
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -314,7 +314,7 @@ class DocumentController extends Controller
             throw new NotFoundHttpException('The Page could not be found');
         }
 
-        $doc = $this->getDoctrine()->getRepository('ContentBundle:Document')->findOneBy([
+        $doc = $this->getDoctrine()->getRepository('ContentBundle:DocumentContent')->findOneBy([
             'page' => $page,
             'name' => $name,
             'isLogo' => 0,
@@ -322,7 +322,7 @@ class DocumentController extends Controller
 
         $doc->setEndPath('page/'.$page->getId());
 
-        if (!($doc instanceof Document)) {
+        if (!($doc instanceof DocumentContent)) {
             throw new NotFoundHttpException('The Document with ID could not be found');
         }
 
@@ -336,7 +336,7 @@ class DocumentController extends Controller
 
     /**
      * @Route("article/{id_article}/image/{name}/delete", options={ "expose" = true}, name="article_image_delete")
-     * Removes a Document
+     * Removes a DocumentContent
      *
      * @param $name
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -356,7 +356,7 @@ class DocumentController extends Controller
             throw new NotFoundHttpException('The Article could not be found');
         }
 
-        $doc = $this->getDoctrine()->getRepository('ContentBundle:Document')->findOneBy([
+        $doc = $this->getDoctrine()->getRepository('ContentBundle:DocumentContent')->findOneBy([
             'article' => $article,
             'name' => $name,
             'isLogo' => 0,
@@ -364,7 +364,7 @@ class DocumentController extends Controller
 
         $doc->setEndPath('article/'.$article->getId());
 
-        if (!($doc instanceof Document)) {
+        if (!($doc instanceof DocumentContent)) {
             throw new NotFoundHttpException('The Document with ID could not be found');
         }
 

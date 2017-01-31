@@ -2,7 +2,7 @@
 
 namespace ContentBundle\Controller;
 
-use ContentBundle\Entity\Document;
+use ContentBundle\Entity\DocumentContent;
 use ContentBundle\Entity\Rubrique;
 use ContentBundle\Form\RubriqueType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -10,7 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -84,9 +83,9 @@ class RubriqueController extends Controller
 
         $isActive = $rubrique->getIsActive();
 
-        $doc = $em->getRepository('ContentBundle:Document')->findOneBy(['rubrique' => $rubrique, 'isLogo' => 1]);
+        $doc = $em->getRepository('ContentBundle:DocumentContent')->findOneBy(['rubrique' => $rubrique, 'isLogo' => 1]);
         if (empty($doc)) {
-            $doc = new Document();
+            $doc = new DocumentContent();
             $doc->setIsLogo(1);
             $doc->setRubrique($rubrique);
             $doc->setEndPath('rubrique/logo');
@@ -123,9 +122,9 @@ class RubriqueController extends Controller
                 }
 
                 $i = 0;
-                foreach ($rubrique->getDocument() as $val) {
+                foreach ($rubrique->getDocumentContent() as $val) {
                     if ($val->getIsLogo() == 1) {
-                        $doc->setName($form->get('document')[$i]['name']->getData());
+                        $doc->setName($form->get('documentContent')[$i]['name']->getData());
                     }
                     $i++;
                 }
@@ -193,12 +192,12 @@ class RubriqueController extends Controller
         $rubrique->setUser($user);
         $rubrique->setCreatedAt(new \DateTime());
 
-        $doc = new Document();
+        $doc = new DocumentContent();
         $doc->setIsLogo(1);
         $doc->setEndPath('rubrique/logo');
         $doc->setRubrique($rubrique);
         $doc->setCreatedAt(new \DateTime());
-        $rubrique->getDocument()->add($doc);
+        $rubrique->getDocumentContent()->add($doc);
 
         $form = $this->createForm(RubriqueType::class, $rubrique, [
             'action' => $this->generateUrl('admin_rubrique_new'),
@@ -277,7 +276,7 @@ class RubriqueController extends Controller
             return $this->redirect($this->generateUrl('admin_rubrique_list'));
         }
 
-        $docs = $em->getRepository('ContentBundle:Document')->findBy(['rubrique' => $rubrique], []);
+        $docs = $em->getRepository('ContentBundle:DocumentContent')->findBy(['rubrique' => $rubrique], []);
         foreach ($docs as $doc) {
             if ($doc->getIsLogo()) {
                 $doc->setEndPath('rubrique/logo');

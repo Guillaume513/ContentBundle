@@ -118,10 +118,10 @@ class Rubrique
     private $user;
 
     /**
-     * @var Document
-     * @ORM\OneToMany(targetEntity="Document", mappedBy="rubrique", cascade={"persist"})
+     * @var DocumentContent
+     * @ORM\OneToMany(targetEntity="ContentBundle\Entity\DocumentContent", mappedBy="rubrique", cascade={"persist"})
      */
-    private $document;
+    private $documentContent;
 
     /**
      * @var Page
@@ -133,7 +133,7 @@ class Rubrique
      */
     public function __construct()
     {
-        $this->document = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->documentContent = new \Doctrine\Common\Collections\ArrayCollection();
         $this->page = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -204,7 +204,7 @@ class Rubrique
      */
     public function setSummary($summary)
     {
-        $this->summary = htmlspecialchars($summary);
+        $this->summary = $summary;
 
         return $this;
     }
@@ -216,7 +216,7 @@ class Rubrique
      */
     public function getSummary()
     {
-        return htmlspecialchars_decode($this->summary);
+        return $this->summary;
     }
 
     /**
@@ -228,7 +228,7 @@ class Rubrique
      */
     public function setText($text)
     {
-        $this->text = htmlspecialchars($text);
+        $this->text = $text;
 
         return $this;
     }
@@ -240,7 +240,7 @@ class Rubrique
      */
     public function getText()
     {
-        return htmlspecialchars_decode($this->text);
+        return $this->text;
     }
 
     /**
@@ -264,7 +264,7 @@ class Rubrique
      */
     public function getIsActive()
     {
-        return (boolean) $this->isActive;
+        return $this->isActive;
     }
 
     /**
@@ -460,37 +460,37 @@ class Rubrique
     }
 
     /**
-     * Add document
+     * Add documentContent
      *
-     * @param \ContentBundle\Entity\Document $document
+     * @param \ContentBundle\Entity\DocumentContent $documentContent
      *
      * @return Rubrique
      */
-    public function addDocument(\ContentBundle\Entity\Document $document)
+    public function addDocumentContent(\ContentBundle\Entity\DocumentContent $documentContent)
     {
-        $this->document[] = $document;
+        $this->documentContent[] = $documentContent;
 
         return $this;
     }
 
     /**
-     * Remove document
+     * Remove documentContent
      *
-     * @param \ContentBundle\Entity\Document $document
+     * @param \ContentBundle\Entity\DocumentContent $documentContent
      */
-    public function removeDocument(\ContentBundle\Entity\Document $document)
+    public function removeDocumentContent(\ContentBundle\Entity\DocumentContent $documentContent)
     {
-        $this->document->removeElement($document);
+        $this->documentContent->removeElement($documentContent);
     }
 
     /**
-     * Get document
+     * Get documentContent
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getDocument()
+    public function getDocumentContent()
     {
-        return $this->document;
+        return $this->documentContent;
     }
 
     /**

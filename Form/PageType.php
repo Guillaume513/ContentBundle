@@ -62,7 +62,7 @@ class PageType extends AbstractType
                 'config_name' => 'my_config',
             ])
             ->add('document', CollectionType::class, [
-                'entry_type' => DocumentType::class,
+                'entry_type' => DocumentContentType::class,
                 'by_reference' => true,
             ])
             ->add('rubrique', EntityType::class, [
