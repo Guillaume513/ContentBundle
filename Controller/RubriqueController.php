@@ -117,12 +117,12 @@ class RubriqueController extends Controller
                 }
 
                 if (empty($rubrique->getRefUrl()) && empty($form->get('refUrl')->getData())) {
-                    $helper = $this->get('app.helper.fonction');
+                    $helper = $this->get('content.helper.fonction');
                     $rubrique->setRefUrl($helper->clean_url($form->get('title')->getData()));
                 }
 
                 $i = 0;
-                foreach ($rubrique->getDocumentContent() as $val) {
+                foreach ($rubrique->getDocument() as $val) {
                     if ($val->getIsLogo() == 1) {
                         $doc->setName($form->get('documentContent')[$i]['name']->getData());
                     }
@@ -188,8 +188,7 @@ class RubriqueController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $rubrique = new Rubrique();
-        $user = $em->getRepository('AppBundle:User')->find($this->getUser()->getId());
-        $rubrique->setUser($user);
+        $rubrique->setUser($this->getUser());
         $rubrique->setCreatedAt(new \DateTime());
 
         $doc = new DocumentContent();
@@ -197,7 +196,7 @@ class RubriqueController extends Controller
         $doc->setEndPath('rubrique/logo');
         $doc->setRubrique($rubrique);
         $doc->setCreatedAt(new \DateTime());
-        $rubrique->getDocumentContent()->add($doc);
+        $rubrique->getDocument()->add($doc);
 
         $form = $this->createForm(RubriqueType::class, $rubrique, [
             'action' => $this->generateUrl('admin_rubrique_new'),
@@ -214,7 +213,7 @@ class RubriqueController extends Controller
                 $object = $form->getData();
 
                 if (empty($form->get('refUrl')->getData())) {
-                    $helper = $this->get('app.helper.fonction');
+                    $helper = $this->get('content.helper.fonction');
                     $rubrique->setRefUrl($helper->clean_url($form->get('title')->getData()));
                 }
 

@@ -66,12 +66,12 @@ class PageController extends Controller
                 }
 
                 if (empty($page->getRefUrl()) && empty($form->get('refUrl')->getData())) {
-                    $helper = $this->get('app.helper.fonction');
+                    $helper = $this->get('content.helper.fonction');
                     $page->setRefUrl($helper->clean_url($form->get('title')->getData()));
                 }
 
                 $i = 0;
-                foreach ($page->getDocumentContent() as $val) {
+                foreach ($page->getDocument() as $val) {
                     if ($val->getIsLogo() == 1) {
                         $doc->setName($form->get('documentContent')[$i]['name']->getData());
                     }
@@ -153,7 +153,7 @@ class PageController extends Controller
         $doc->setEndPath('page/logo');
         $doc->setPage($page);
         $doc->setCreatedAt(new \DateTime());
-        $page->getDocumentContent()->add($doc);
+        $page->getDocument()->add($doc);
 
 
         $form = $this->createForm(PageType::class, $page, [
@@ -171,7 +171,7 @@ class PageController extends Controller
                 $object = $form->getData();
 
                 if (empty($form->get('refUrl')->getData())) {
-                    $helper = $this->get('app.helper.fonction');
+                    $helper = $this->get('content.helper.fonction');
                     $page->setRefUrl($helper->clean_url($form->get('title')->getData()));
                 }
 

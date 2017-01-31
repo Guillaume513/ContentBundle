@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace ContentBundle\Form;
 
 use ContentBundle\Repository\RubriqueRepository;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;

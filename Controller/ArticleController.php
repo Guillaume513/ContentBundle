@@ -55,12 +55,12 @@ class ArticleController extends Controller
                 $object = $form->getData();
 
                 if (empty($article->getRefUrl()) && empty($form->get('refUrl')->getData())) {
-                    $helper = $this->get('app.helper.fonction');
+                    $helper = $this->get('content.helper.fonction');
                     $article->setRefUrl($helper->clean_url($form->get('title')->getData()));
                 }
 
                 $i = 0;
-                foreach ($article->getDocumentContent() as $val) {
+                foreach ($article->getDocument() as $val) {
                     if ($val->getIsLogo() == 1) {
                         $doc->setName($form->get('documentContent')[$i]['name']->getData());
                     }
@@ -142,7 +142,7 @@ class ArticleController extends Controller
         $doc->setEndPath('article/logo');
         $doc->setArticle($article);
         $doc->setCreatedAt(new \DateTime());
-        $article->getDocumentContent()->add($doc);;
+        $article->getDocument()->add($doc);;
 
         $form = $this->createForm(ArticleType::class, $article, [
             'action' => $this->generateUrl('admin_article_new', ['pageId' => $page->getId()]),
@@ -158,7 +158,7 @@ class ArticleController extends Controller
                 $object = $form->getData();
 
                 if (empty($form->get('refUrl')->getData())) {
-                    $helper = $this->get('app.helper.fonction');
+                    $helper = $this->get('content.helper.fonction');
                     $article->setRefUrl($helper->clean_url($form->get('title')->getData()));
                 }
 

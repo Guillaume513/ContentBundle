@@ -309,7 +309,7 @@ class Page
      */
     public function getIsActive()
     {
-        return $this->isActive;
+        return (boolean)$this->isActive;
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace ContentBundle\Form;
 
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;

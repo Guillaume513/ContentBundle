@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace ContentBundle\Form;
 
 use ContentBundle\Entity\Rubrique;
 use ContentBundle\Repository\PageRepository;
