@@ -121,7 +121,7 @@ class Rubrique
      * @var DocumentContent
      * @ORM\OneToMany(targetEntity="ContentBundle\Entity\DocumentContent", mappedBy="rubrique", cascade={"persist"})
      */
-    private $documentContent;
+    private $document;
 
     /**
      * @var Page
@@ -133,7 +133,7 @@ class Rubrique
      */
     public function __construct()
     {
-        $this->documentContent = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->document = new \Doctrine\Common\Collections\ArrayCollection();
         $this->page = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -458,40 +458,7 @@ class Rubrique
     {
         return $this->user;
     }
-
-    /**
-     * Add documentContent
-     *
-     * @param \ContentBundle\Entity\DocumentContent $documentContent
-     *
-     * @return Rubrique
-     */
-    public function addDocumentContent(\ContentBundle\Entity\DocumentContent $documentContent)
-    {
-        $this->documentContent[] = $documentContent;
-
-        return $this;
-    }
-
-    /**
-     * Remove documentContent
-     *
-     * @param \ContentBundle\Entity\DocumentContent $documentContent
-     */
-    public function removeDocumentContent(\ContentBundle\Entity\DocumentContent $documentContent)
-    {
-        $this->documentContent->removeElement($documentContent);
-    }
-
-    /**
-     * Get documentContent
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDocumentContent()
-    {
-        return $this->documentContent;
-    }
+    
 
     /**
      * Add page
@@ -525,5 +492,39 @@ class Rubrique
     public function getPage()
     {
         return $this->page;
+    }
+
+    /**
+     * Add document
+     *
+     * @param \ContentBundle\Entity\DocumentContent $document
+     *
+     * @return Rubrique
+     */
+    public function addDocument(\ContentBundle\Entity\DocumentContent $document)
+    {
+        $this->document[] = $document;
+
+        return $this;
+    }
+
+    /**
+     * Remove document
+     *
+     * @param \ContentBundle\Entity\DocumentContent $document
+     */
+    public function removeDocument(\ContentBundle\Entity\DocumentContent $document)
+    {
+        $this->document->removeElement($document);
+    }
+
+    /**
+     * Get document
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocument()
+    {
+        return $this->document;
     }
 }
