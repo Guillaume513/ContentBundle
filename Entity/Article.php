@@ -140,14 +140,13 @@ class Article
      * @var DocumentContent
      * @ORM\OneToMany(targetEntity="ContentBundle\Entity\DocumentContent", mappedBy="article", cascade={"persist"})
      */
-    private $documentContent;
-
+    private $document;
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->documentContent = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->document = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -241,7 +240,7 @@ class Article
      */
     public function setChapo($chapo)
     {
-        $this->chapo = $chapo;
+        $this->chapo = htmlspecialchars($chapo);
 
         return $this;
     }
@@ -253,7 +252,7 @@ class Article
      */
     public function getChapo()
     {
-        return $this->chapo;
+        return htmlspecialchars_decode($this->chapo);
     }
 
     /**
@@ -265,7 +264,7 @@ class Article
      */
     public function setSummary($summary)
     {
-        $this->summary = $summary;
+        $this->summary = htmlspecialchars($summary);
 
         return $this;
     }
@@ -277,7 +276,7 @@ class Article
      */
     public function getSummary()
     {
-        return $this->summary;
+        return htmlspecialchars_decode($this->summary);
     }
 
     /**
@@ -289,7 +288,7 @@ class Article
      */
     public function setText($text)
     {
-        $this->text = $text;
+        $this->text = htmlspecialchars($text);
 
         return $this;
     }
@@ -301,7 +300,7 @@ class Article
      */
     public function getText()
     {
-        return $this->text;
+        return htmlspecialchars_decode($this->text);
     }
 
     /**
@@ -325,7 +324,7 @@ class Article
      */
     public function getIsActive()
     {
-        return $this->isActive;
+        return (boolean) $this->isActive;
     }
 
     /**
@@ -457,7 +456,7 @@ class Article
      */
     public function setRefSummary($refSummary)
     {
-        $this->refSummary = $refSummary;
+        $this->refSummary = htmlspecialchars($refSummary);
 
         return $this;
     }
@@ -469,7 +468,7 @@ class Article
      */
     public function getRefSummary()
     {
-        return $this->refSummary;
+        return htmlspecialchars_decode($this->refSummary);
     }
 
     /**
@@ -481,7 +480,7 @@ class Article
      */
     public function setRefKeywords($refKeywords)
     {
-        $this->refKeywords = $refKeywords;
+        $this->refKeywords = htmlspecialchars($refKeywords);
 
         return $this;
     }
@@ -493,7 +492,7 @@ class Article
      */
     public function getRefKeywords()
     {
-        return $this->refKeywords;
+        return htmlspecialchars_decode($this->refKeywords);
     }
 
     /**
@@ -521,36 +520,36 @@ class Article
     }
 
     /**
-     * Add documentContent
+     * Add document
      *
-     * @param \ContentBundle\Entity\DocumentContent $documentContent
+     * @param \ContentBundle\Entity\DocumentContent $document
      *
      * @return Article
      */
-    public function addDocumentContent(\ContentBundle\Entity\DocumentContent $documentContent)
+    public function addDocument(\ContentBundle\Entity\DocumentContent $document)
     {
-        $this->documentContent[] = $documentContent;
+        $this->document[] = $document;
 
         return $this;
     }
 
     /**
-     * Remove documentContent
+     * Remove document
      *
-     * @param \ContentBundle\Entity\DocumentContent $documentContent
+     * @param \ContentBundle\Entity\DocumentContent $document
      */
-    public function removeDocumentContent(\ContentBundle\Entity\DocumentContent $documentContent)
+    public function removeDocument(\ContentBundle\Entity\DocumentContent $document)
     {
-        $this->documentContent->removeElement($documentContent);
+        $this->document->removeElement($document);
     }
 
     /**
-     * Get documentContent
+     * Get document
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getDocumentContent()
+    public function getDocument()
     {
-        return $this->documentContent;
+        return $this->document;
     }
 }

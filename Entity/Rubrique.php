@@ -204,7 +204,7 @@ class Rubrique
      */
     public function setSummary($summary)
     {
-        $this->summary = $summary;
+        $this->summary = htmlspecialchars($summary);
 
         return $this;
     }
@@ -216,7 +216,7 @@ class Rubrique
      */
     public function getSummary()
     {
-        return $this->summary;
+        return htmlspecialchars_decode($this->summary);
     }
 
     /**
@@ -228,7 +228,7 @@ class Rubrique
      */
     public function setText($text)
     {
-        $this->text = $text;
+        $this->text = htmlspecialchars($text);
 
         return $this;
     }
@@ -240,7 +240,7 @@ class Rubrique
      */
     public function getText()
     {
-        return $this->text;
+        return htmlspecialchars_decode($this->text);
     }
 
     /**
@@ -264,7 +264,7 @@ class Rubrique
      */
     public function getIsActive()
     {
-        return $this->isActive;
+        return (boolean)$this->isActive;
     }
 
     /**
@@ -396,7 +396,7 @@ class Rubrique
      */
     public function setRefSummary($refSummary)
     {
-        $this->refSummary = $refSummary;
+        $this->refSummary = htmlspecialchars($refSummary);
 
         return $this;
     }
@@ -408,7 +408,7 @@ class Rubrique
      */
     public function getRefSummary()
     {
-        return $this->refSummary;
+        return htmlspecialchars_decode($this->refSummary);
     }
 
     /**
@@ -420,7 +420,7 @@ class Rubrique
      */
     public function setRefKeywords($refKeywords)
     {
-        $this->refKeywords = $refKeywords;
+        $this->refKeywords = htmlspecialchars($refKeywords);
 
         return $this;
     }
@@ -432,7 +432,7 @@ class Rubrique
      */
     public function getRefKeywords()
     {
-        return $this->refKeywords;
+        return htmlspecialchars_decode($this->refKeywords);
     }
 
     /**

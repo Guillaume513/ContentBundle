@@ -141,12 +141,12 @@ class Page
      * @var DocumentContent
      * @ORM\OneToMany(targetEntity="DocumentContent", mappedBy="page", cascade={"persist"})
      */
-    private $documentContent;
+    private $document;
 
     /**
      * @var Article
      * @ORM\OneToMany(targetEntity="Article", mappedBy="page", cascade={"persist"})
      */
     private $article;
-
+    
 }

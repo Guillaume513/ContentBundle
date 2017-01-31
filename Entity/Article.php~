@@ -140,6 +140,5 @@ class Article
      * @var DocumentContent
      * @ORM\OneToMany(targetEntity="ContentBundle\Entity\DocumentContent", mappedBy="article", cascade={"persist"})
      */
-    private $documentContent;
-
+    private $document;
 }
