@@ -93,14 +93,14 @@
                                             <td><a class="fa fa-file margin-left-page icon-state-info"  href="{{ path('admin_page_edit', {id: page.id}) }}" > {{ page.title }}</a></td>
                                             <td class="text-center">{{ page.updatedAt|date('d/m/Y H:i') }}</td>
                                             <td class="text-center">
-                                                <a class="myIcon icon-success icon-ef-3 icon-ef-3a hover-color"" title="Editer" href="{{ path('admin_page_edit', {id: page.id}) }}">
+                                                <a class="myIcon icon-success icon-ef-3 icon-ef-3a hover-color" title="Editer" href="{{ path('admin_page_edit', {id: page.id}) }}">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                             </td>
                                             {% if is_granted('ROLE_SUPER_ADMIN') %}
                                                 {% if page.article is empty %}
                                                     <td class="text-center">
-                                                        <a class="myIcon icon-danger icon-ef-3 icon-ef-3a hover-color" suppr" title="Supprimer" href="{{ path('admin_page_delete', {id: page.id}) }}">
+                                                        <a class="myIcon icon-danger icon-ef-3 icon-ef-3a hover-color suppr" title="Supprimer" href="{{ path('admin_page_delete', {id: page.id}) }}">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
                                                     </td>
@@ -109,7 +109,7 @@
                                                 {% endif %}
                                                 <td></td>
                                                 <td class="text-center">
-                                                    <a class="myIcon icon-primary icon-ef-3 icon-ef-3a hover-color"" title="Ajouter un article" href="{{ path('admin_article_new', {pageId: page.id}) }}">
+                                                    <a class="myIcon icon-primary icon-ef-3 icon-ef-3a hover-color" title="Ajouter un article" href="{{ path('admin_article_new', {pageId: page.id}) }}">
                                                         <i class="fa fa-plus"></i>
                                                     </a>
                                                 </td>
